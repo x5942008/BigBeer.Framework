@@ -25,7 +25,7 @@ namespace BigBeer.Framework.Test
             Console.WriteLine($"文件保存成功，请在路径{path}查看文件{name1}{sufiix}");
             QRCode_Zxing.Generate(url,logo,path,name2,type,800,800);//带logo二维码 并且自定义大小
             Console.WriteLine($"文件保存成功，请在路径{path}查看文件{name2}{sufiix}");
-            QRCode_Zxing.Generate2(BarCode,path,name3,type);
+            QRCode_Zxing.Generate2(BarCode,path,name3,type,300,100);//宽高比例3:1
             Console.WriteLine($"文件保存成功，请在路径{path}查看文件{name3}{sufiix}");
             //读取解析二维码和条形码
             var result1 =  QRCode_Zxing.Read($"{path}{name1}{sufiix}");

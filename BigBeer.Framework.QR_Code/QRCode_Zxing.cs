@@ -117,6 +117,8 @@ namespace BigBeer.Framework.QR_Code
             writer.Format = BarcodeFormat.CODE_128;
             int w = 150;
             int h = 50;
+            if (width != null) w = (int)width;
+            if (hight != null) h = (int)hight;
             EncodingOptions options = new EncodingOptions()
             {
                 Width = w,
