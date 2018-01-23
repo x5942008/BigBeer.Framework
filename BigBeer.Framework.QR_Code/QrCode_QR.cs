@@ -15,54 +15,20 @@ namespace BigBeer.Framework.QR_Code
     {
         #region 引用Nuget包 QrCode.Net 
         /// <summary>
-        /// 生成中文二维码-支持中文
+        /// 二维码生成
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="filename"></param>
-        public static void GenerateNomarl(string url, string filename, ImgType type = ImgType.Png)
+        /// <param name="url">二维码网站地址或者数据</param>
+        /// <param name="filename">文件名</param>
+        /// <param name="savapath">保存地址</param>
+        /// <param name="type">图片格式</param>
+        public static void Generate(string url, string filename, string savapath, ImgType type = ImgType.Png)
         {
             QrEncoder qrEncoder = new QrEncoder();
             var qrCode = qrEncoder.Encode(url);
             //保存成png文件
             //string filename = @"H:\桌面\截图\url.png";
-            string suffix;//后缀
-            switch (type)
-            {
-                case ImgType.MemoryBmp:
-                    suffix = ".memoryBmp";
-                    break;
-                case ImgType.Bmp:
-                    suffix = ".bmp";
-                    break;
-                case ImgType.Emf:
-                    suffix = ".emf";
-                    break;
-                case ImgType.Wmf:
-                    suffix = ".wmf";
-                    break;
-                case ImgType.Gif:
-                    suffix = ".gif";
-                    break;
-                case ImgType.Jpeg:
-                    suffix = ".jpeg";
-                    break;
-                case ImgType.Png:
-                    suffix = ".png";
-                    break;
-                case ImgType.Tiff:
-                    suffix = ".tiff";
-                    break;
-                case ImgType.Exif:
-                    suffix = ".exif";
-                    break;
-                case ImgType.Icon:
-                    suffix = ".icon";
-                    break;
-                default:
-                    suffix = ".png";
-                    break;
-            }
-            filename = $"{filename}{suffix}";
+            string suffix = Suffix.Getsuffix(type); ;//后缀
+            filename = $"{savapath}{filename}{suffix}";
             GraphicsRenderer render = new GraphicsRenderer(new FixedModuleSize(5, QuietZoneModules.Two), Brushes.Black, Brushes.White);
             using (FileStream stream = new FileStream(filename, FileMode.Create))
             {
@@ -71,50 +37,15 @@ namespace BigBeer.Framework.QR_Code
         }
 
         //生成中文二维码-支持中文(自定义大小)
-        public static void Generate(string url, string filename, ImgType type =  ImgType.Png, int? width =null,int? high =null)
+        //暂时未完善 只定义了背景大小
+         static void Generate(string url, string filename, string savapath, ImgType type =  ImgType.Png, int? width =null,int? high =null)
         {
             QrEncoder qrEncoder = new QrEncoder();
             var qrCode = qrEncoder.Encode(url);
             //保存成png文件
             //string filename = @"H:\桌面\截图\cn.png";
-            string suffix;//后缀
-            switch (type)
-            {
-                case ImgType.MemoryBmp:
-                    suffix = ".memoryBmp";
-                    break;
-                case ImgType.Bmp:
-                    suffix = ".bmp";
-                    break;
-                case ImgType.Emf:
-                    suffix = ".emf";
-                    break;
-                case ImgType.Wmf:
-                    suffix = ".wmf";
-                    break;
-                case ImgType.Gif:
-                    suffix = ".gif";
-                    break;
-                case ImgType.Jpeg:
-                    suffix = ".jpeg";
-                    break;
-                case ImgType.Png:
-                    suffix = ".png";
-                    break;
-                case ImgType.Tiff:
-                    suffix = ".tiff";
-                    break;
-                case ImgType.Exif:
-                    suffix = ".exif";
-                    break;
-                case ImgType.Icon:
-                    suffix = ".icon";
-                    break;
-                default:
-                    suffix = ".png";
-                    break;
-            }
-            filename = $"{filename}{suffix}";
+            string suffix = Suffix.Getsuffix(type); ;//后缀
+            filename = $"{savapath}{filename}{suffix}";
             GraphicsRenderer render = new GraphicsRenderer(new FixedModuleSize(5, QuietZoneModules.Two), Brushes.Black, Brushes.White);
             int w = 500;
             int h = 500;
@@ -122,7 +53,7 @@ namespace BigBeer.Framework.QR_Code
             if (high != null) h = (int)high;
             Bitmap map = new Bitmap(w, h);
             Graphics g = Graphics.FromImage(map);
-            g.FillRectangle(Brushes.Red, 0, 0, 500, 500);
+            g.FillRectangle(Brushes.White, 0, 0, w, h);
             render.Draw(g, qrCode.Matrix, new Point(20, 20));
             map.Save(filename, ImageFormat.Png);
         }
@@ -171,28 +102,5 @@ namespace BigBeer.Framework.QR_Code
             map.Save(filename, ImageFormat.Png);
         }
         #endregion
-    }
-    public enum ImgType
-    {
-        // 在内存中的位图的格式。
-        MemoryBmp,
-        //位图 (BMP) 图像格式
-        Bmp,
-        //增强型图元文件 (EMF) 图像格式
-        Emf,
-        //Windows 图元文件 (WMF) 映像格式
-        Wmf,
-        //图形交换格式 (GIF) 图像格式。
-        Gif,
-        // 联合图像专家组 (JPEG) 图像格式。
-        Jpeg,
-        // W3C 可移植网络图形 (PNG) 图像格式。
-        Png,
-        // 图像文件格式 (TIFF) 图像格式。
-        Tiff,
-        // 获取可交换图像文件 (Exif) 格式。
-        Exif,
-        //Windows 图标图像格式。
-        Icon
     }
 }
