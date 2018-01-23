@@ -11,7 +11,7 @@ using ZXing.Common;
 
 namespace BigBeer.Framework.QR_Code
 {
-    class QRCode_Zxing
+    public class QRCode_Zxing
     {
         #region C#生成二维码-基础版本
         //需要引用ZXing.DLL  可以百度一下  一个很好用的二维码生成程序集《DLL文件啦》

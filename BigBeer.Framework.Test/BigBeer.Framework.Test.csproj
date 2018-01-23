@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BigBeer.Framework.QR_Code\BigBeer.Framework.QR_Code.csproj">
+      <Project>{931a9b5d-3375-489c-8718-e95d7ea01bec}</Project>
+      <Name>BigBeer.Framework.QR_Code</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

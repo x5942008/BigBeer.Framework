@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BigBeer.Framework.QR_Code
 {
-    class QrCode_QR
+    public class QrCode_QR
     {
         #region 引用Nuget包 QrCode.Net 
         /// <summary>
@@ -19,12 +19,50 @@ namespace BigBeer.Framework.QR_Code
         /// </summary>
         /// <param name="url"></param>
         /// <param name="filename"></param>
-        public static void GenerateNomarl(string url, string filename)
+        public static void GenerateNomarl(string url, string filename, ImgType type = ImgType.Png)
         {
             QrEncoder qrEncoder = new QrEncoder();
             var qrCode = qrEncoder.Encode(url);
             //保存成png文件
             //string filename = @"H:\桌面\截图\url.png";
+            string suffix;//后缀
+            switch (type)
+            {
+                case ImgType.MemoryBmp:
+                    suffix = ".memoryBmp";
+                    break;
+                case ImgType.Bmp:
+                    suffix = ".bmp";
+                    break;
+                case ImgType.Emf:
+                    suffix = ".emf";
+                    break;
+                case ImgType.Wmf:
+                    suffix = ".wmf";
+                    break;
+                case ImgType.Gif:
+                    suffix = ".gif";
+                    break;
+                case ImgType.Jpeg:
+                    suffix = ".jpeg";
+                    break;
+                case ImgType.Png:
+                    suffix = ".png";
+                    break;
+                case ImgType.Tiff:
+                    suffix = ".tiff";
+                    break;
+                case ImgType.Exif:
+                    suffix = ".exif";
+                    break;
+                case ImgType.Icon:
+                    suffix = ".icon";
+                    break;
+                default:
+                    suffix = ".png";
+                    break;
+            }
+            filename = $"{filename}{suffix}";
             GraphicsRenderer render = new GraphicsRenderer(new FixedModuleSize(5, QuietZoneModules.Two), Brushes.Black, Brushes.White);
             using (FileStream stream = new FileStream(filename, FileMode.Create))
             {
