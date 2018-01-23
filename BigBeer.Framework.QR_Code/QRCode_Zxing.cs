@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BigBeer.Framework.QR_Code
 {
-    public class Class1
+    class QRCode_Zxing
     {
     }
 }
