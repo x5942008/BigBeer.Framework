@@ -56,6 +56,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceCollections.cs" />
     <Compile Include="ServiceHost.cs" />
+    <Compile Include="StartService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StartService.Designer.cs">
+      <DependentUpon>StartService.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BigBeer.Framework.Service.Interface\BigBeer.Framework.Service.Interface.csproj">
