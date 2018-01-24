@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.Framework.Service.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.Framework.Service.Host", "BigBeer.Framework.Service.Host\BigBeer.Framework.Service.Host.csproj", "{95AD9728-DA92-425D-93B3-B3B355CC2887}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.Framework.Command.Frame", "BigBeer.Framework.Command.Frame\BigBeer.Framework.Command.Frame.csproj", "{A2F60D40-46DF-4942-8BA9-9D676145437B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.Framework.Command.Host", "BigBeer.Framework.Command.Host\BigBeer.Framework.Command.Host.csproj", "{ED5A35C7-D460-4337-9327-08897E21D812}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{95AD9728-DA92-425D-93B3-B3B355CC2887}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95AD9728-DA92-425D-93B3-B3B355CC2887}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95AD9728-DA92-425D-93B3-B3B355CC2887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2F60D40-46DF-4942-8BA9-9D676145437B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2F60D40-46DF-4942-8BA9-9D676145437B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2F60D40-46DF-4942-8BA9-9D676145437B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2F60D40-46DF-4942-8BA9-9D676145437B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED5A35C7-D460-4337-9327-08897E21D812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED5A35C7-D460-4337-9327-08897E21D812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED5A35C7-D460-4337-9327-08897E21D812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED5A35C7-D460-4337-9327-08897E21D812}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +54,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FDAE95C2-D342-4E7C-AE92-13FA45AA70D9} = {7422A769-962A-4597-91A4-CEDAA04155A0}
 		{95AD9728-DA92-425D-93B3-B3B355CC2887} = {7422A769-962A-4597-91A4-CEDAA04155A0}
+		{A2F60D40-46DF-4942-8BA9-9D676145437B} = {7422A769-962A-4597-91A4-CEDAA04155A0}
+		{ED5A35C7-D460-4337-9327-08897E21D812} = {7422A769-962A-4597-91A4-CEDAA04155A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C910FBD5-6B5A-42C7-ACD9-E2DC33FC39A6}

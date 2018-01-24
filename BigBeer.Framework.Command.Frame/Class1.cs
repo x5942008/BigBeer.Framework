@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BigBeer.Framework.Service.Host
+namespace BigBeer.Framework.Command.Frame
 {
     public class Class1
     {
