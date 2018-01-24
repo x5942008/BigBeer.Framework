@@ -35,14 +35,14 @@ namespace BigBeer.Service.Host
         static void Main(string[] args)
         {
             ToScreenCenter();
-            Console.Title = "布德软件服务框架";
+            Console.Title = "大雄软件服务框架";
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("*************布德软件服务框架*************");
-            Console.WriteLine("*       email:develop@buydee.cn          *");
-            Console.WriteLine("*       phone:15160008838                *");
-            Console.WriteLine("*       developer:sunlutao@buydee.cn     *");
-            Console.WriteLine("*       布德软件科技有限公司             *");
-            Console.WriteLine("******************************************");
+            Console.WriteLine("************大雄软件服务框架***********");
+            Console.WriteLine("*       email:549590615@qq.com        *");
+            Console.WriteLine("*       phone:15980892074             *");
+            Console.WriteLine("*       WebSite:www.wujixiong.com     *");
+            Console.WriteLine("*          软件科技有限公司           *");
+            Console.WriteLine("***************************************");
             Console.ForegroundColor = ConsoleColor.White;
             commands.First().Value.action(null);
             if (loader == null)

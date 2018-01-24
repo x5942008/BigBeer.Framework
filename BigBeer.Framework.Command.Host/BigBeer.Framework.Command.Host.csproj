@@ -32,6 +32,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>www.ico.la_4fd6e21f3738a5a9802f509df8631f01_50X50.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -55,6 +58,9 @@
       <Project>{a2f60d40-46df-4942-8ba9-9d676145437b}</Project>
       <Name>BigBeer.Framework.Command.Frame</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="www.ico.la_4fd6e21f3738a5a9802f509df8631f01_50X50.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

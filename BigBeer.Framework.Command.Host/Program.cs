@@ -43,7 +43,7 @@ namespace BigBeer.Framework.Command.Host
             Console.WriteLine("*       email:549590615@qq.com           *");
             Console.WriteLine("*         phone:15980892074              *");
             Console.WriteLine("*         www.wujixiong.com              *");
-            Console.WriteLine("*          大雄微服务框架                *");
+            Console.WriteLine("*            大雄服务框架                *");
             Console.WriteLine("******************************************");
             Console.WriteLine("输入:help 获取所有命令");
             //创建系统命令
