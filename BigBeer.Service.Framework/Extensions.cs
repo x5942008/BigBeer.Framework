@@ -39,7 +39,7 @@ namespace BigBeer.Service.Framework
                 return JsonConvert.DeserializeObject<T>(value);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return default(T);
             }

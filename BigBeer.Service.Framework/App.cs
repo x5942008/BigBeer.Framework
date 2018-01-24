@@ -44,7 +44,7 @@ namespace BigBeer.Service.Framework
                 var configjson = new FileInfo(path).OpenText().ReadToEnd();
                 return configjson.ToObject<Config>();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return result;
             }
@@ -82,7 +82,7 @@ namespace BigBeer.Service.Framework
                     sw.Flush();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 await Task.Delay(100);
                 await Log(message, tryNumber++);
