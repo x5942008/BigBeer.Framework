@@ -17,6 +17,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.Framework.Command.F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.Framework.Command.Host", "BigBeer.Framework.Command.Host\BigBeer.Framework.Command.Host.csproj", "{ED5A35C7-D460-4337-9327-08897E21D812}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.Service.Host", "BigBeer.Service.Host\BigBeer.Service.Host.csproj", "{5386FB29-4F08-4556-BB85-0010B3D48DE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serviceold", "Serviceold", "{E2512CEA-8335-4B9B-9148-C7A39F55438B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.Service.Framework", "BigBeer.Service.Framework\BigBeer.Service.Framework.csproj", "{D84B9BAC-3522-4109-948F-AE412A29801D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +53,14 @@ Global
 		{ED5A35C7-D460-4337-9327-08897E21D812}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED5A35C7-D460-4337-9327-08897E21D812}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED5A35C7-D460-4337-9327-08897E21D812}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5386FB29-4F08-4556-BB85-0010B3D48DE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5386FB29-4F08-4556-BB85-0010B3D48DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5386FB29-4F08-4556-BB85-0010B3D48DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5386FB29-4F08-4556-BB85-0010B3D48DE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D84B9BAC-3522-4109-948F-AE412A29801D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D84B9BAC-3522-4109-948F-AE412A29801D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D84B9BAC-3522-4109-948F-AE412A29801D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D84B9BAC-3522-4109-948F-AE412A29801D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +70,8 @@ Global
 		{95AD9728-DA92-425D-93B3-B3B355CC2887} = {7422A769-962A-4597-91A4-CEDAA04155A0}
 		{A2F60D40-46DF-4942-8BA9-9D676145437B} = {7422A769-962A-4597-91A4-CEDAA04155A0}
 		{ED5A35C7-D460-4337-9327-08897E21D812} = {7422A769-962A-4597-91A4-CEDAA04155A0}
+		{5386FB29-4F08-4556-BB85-0010B3D48DE7} = {E2512CEA-8335-4B9B-9148-C7A39F55438B}
+		{D84B9BAC-3522-4109-948F-AE412A29801D} = {E2512CEA-8335-4B9B-9148-C7A39F55438B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C910FBD5-6B5A-42C7-ACD9-E2DC33FC39A6}
