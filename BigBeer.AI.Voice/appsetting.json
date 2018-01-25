@@ -1,0 +1,12 @@
+﻿{
+  "Voice1": {
+    "APP_ID": "",
+    "API_KEY": "EN4TeB1uf53X3gnNQQUjAS72",
+    "SECRET_KEY": "M6LPeTBAZLV0wW3XvLUKyr2GUxDAWsox"
+  },
+  "Voice2": {
+    "APP_ID": "",
+    "API_KEY": "LAeDzGDkpAGwPyI4HRl2uYlX",
+    "SECRET_KEY": "lDXpcAYrGmFM2OvHdNdMLsZ1qh1jiQY9"
+  }
+}

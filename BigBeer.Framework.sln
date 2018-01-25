@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serviceold", "Serviceold", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.Service.Framework", "BigBeer.Service.Framework\BigBeer.Service.Framework.csproj", "{D84B9BAC-3522-4109-948F-AE412A29801D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeer.AI.Voice", "BigBeer.AI.Voice\BigBeer.AI.Voice.csproj", "{003F389A-6130-420D-85AC-DA4B0E86F427}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{D84B9BAC-3522-4109-948F-AE412A29801D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D84B9BAC-3522-4109-948F-AE412A29801D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D84B9BAC-3522-4109-948F-AE412A29801D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{003F389A-6130-420D-85AC-DA4B0E86F427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{003F389A-6130-420D-85AC-DA4B0E86F427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{003F389A-6130-420D-85AC-DA4B0E86F427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{003F389A-6130-420D-85AC-DA4B0E86F427}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
