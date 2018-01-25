@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using BigBeer.AI.Voice;
 using BigBeer.Framework.QR_Code;
 
@@ -13,39 +14,44 @@ namespace BigBeer.Framework.Test
     {
         static void Main(string[] args)
         {
-
+            #region 语音生成
             string content = "大扎好，我系轱天乐，我四脏渣辉，探挽懒月，介四里没有挽过的船新版本，挤需体验三番钟，里造会干我一样，爱象戒宽油系";
-            string path = @"E:\Voice\";
-            string filename = "tts2";
-            string type = "mp3";
+            string vpath = @"E:\Voice\";
+            string filename = Guid.NewGuid().ToString();
+            VoiceType vtype = VoiceType.mp3;
             int per = 1;
-            Voices.Tts(content, $"{path}{filename}", type, per);
+            Voices.Tts(content,vpath,filename,vtype,per);
+            Console.WriteLine($"生成文件{filename}.{vtype}成功,文件保存路径:{vpath}");
+            Console.WriteLine("继续生成二维码条形码请按回车键！");
             Console.ReadLine();
+            #endregion
 
-            //string path = @"F:\";
-            //string url = "http://www.wujixiong.com";
-            //string name1 = "wujixiong";
-            //string name2 = "bigbeerqr";
-            //string name3 = "bigbeerzx";
-            //string BarCode = "20180123";//条形码数字（双数，80个以内）
-            //ImgType type = ImgType.Png;
-            //var sufiix = Suffix.Getsuffix(type);
-            //string logo = @"F:\123.jpg";//Logo地址 需要修改
-            //QrCode_QR.Generate(url,name1,path,type);//普通二维码
-            //Console.WriteLine($"文件保存成功，请在路径{path}查看文件{name1}{sufiix}");
-            //QRCode_Zxing.Generate(url,logo,path,name2,type,800,800);//带logo二维码 并且自定义大小
-            //Console.WriteLine($"文件保存成功，请在路径{path}查看文件{name2}{sufiix}");
-            //QRCode_Zxing.Generate2(BarCode,path,name3,type,300,100);//宽高比例3:1
-            //Console.WriteLine($"文件保存成功，请在路径{path}查看文件{name3}{sufiix}");
-            ////读取解析二维码和条形码
-            //var result1 =  QRCode_Zxing.Read($"{path}{name1}{sufiix}");
-            //var result2 = QRCode_Zxing.Read($"{path}{name2}{sufiix}");
-            //var result3 = QRCode_Zxing.Read($"{path}{name3}{sufiix}");
-            //Console.WriteLine(result1);
-            //Console.WriteLine(result2);
-            //Console.WriteLine(result3);
-
-            //Console.ReadLine();
+            #region 二维码条形码生成
+            string ipath = @"E:\Image\";
+            string url = "http://www.wujixiong.com";
+            string name1 = "wujixiong";
+            string name2 = "bigbeerqr";
+            string name3 = "bigbeerzx";
+            string BarCode = "20180123";//条形码数字（双数，80个以内）
+            ImgType itype = ImgType.Png;
+            var sufiix = ImgSuffix.Getsuffix(itype);
+            string logo = @"C:\Users\wjx\Desktop\wujixiong.jpg";//Logo地址 需要修改
+            if (Directory.Exists(logo)) Console.WriteLine("Logo地址不正确,请重新确认地址");
+            QrCode_QR.Generate(url, name1, ipath, itype);//普通二维码
+            Console.WriteLine($"文件保存成功，请在路径{ipath}查看文件{name1}{sufiix}");
+            QRCode_Zxing.Generate(url, logo, ipath, name2, itype, 800, 800);//带logo二维码 并且自定义大小
+            Console.WriteLine($"文件保存成功，请在路径{ipath}查看文件{name2}{sufiix}");
+            QRCode_Zxing.Generate2(BarCode, ipath, name3, itype, 300, 100);//宽高比例3:1
+            Console.WriteLine($"文件保存成功，请在路径{ipath}查看文件{name3}{sufiix}");
+            //读取解析二维码和条形码
+            var result1 = QRCode_Zxing.Read($"{ipath}{name1}{sufiix}");
+            var result2 = QRCode_Zxing.Read($"{ipath}{name2}{sufiix}");
+            var result3 = QRCode_Zxing.Read($"{ipath}{name3}{sufiix}");
+            Console.WriteLine(result1);
+            Console.WriteLine(result2);
+            Console.WriteLine(result3);
+            #endregion
+            Console.ReadLine();
         }
     }
 }

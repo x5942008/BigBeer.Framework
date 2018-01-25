@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,7 +88,8 @@ namespace BigBeer.Framework.QR_Code
                 //白底
                 myGraphic.FillRectangle(Brushes.White, middleL, middleT, middleW, middleH);
                 myGraphic.DrawImage(logo, middleL, middleT, middleW, middleH);
-                string suffix = Suffix.Getsuffix(type); ;//后缀
+                string suffix = ImgSuffix.Getsuffix(type); ;//后缀
+                if (!Directory.Exists(serverPth)) Directory.CreateDirectory(serverPth);
                 //保存成图片
                 bmpimg.Save($"{serverPth}{filename}{suffix}");
             }
@@ -127,7 +129,8 @@ namespace BigBeer.Framework.QR_Code
             };
             writer.Options = options;
             Bitmap map = writer.Write(text);
-            string suffix = Suffix.Getsuffix(type); ;//后缀
+            string suffix = ImgSuffix.Getsuffix(type); ;//后缀
+            if (!Directory.Exists(serverPth)) Directory.CreateDirectory(serverPth);
             filename =$"{serverPth}{filename}{suffix}";//请注意 保存格式和文件扩展名一致性
             map.Save(filename);
         }

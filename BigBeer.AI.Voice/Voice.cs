@@ -42,16 +42,18 @@ namespace BigBeer.AI.Voice
         /// <param name="speed">语速</param>
         /// <param name="vol">声量</param>
         /// <param name="per">0为女声，1为男声，3为情感合成男，4为情感女</param>
-        public static void Tts(string content, string path, string suffix = "wav", int per = 1, int speed = 5, int vol = 7)
+        public static void Tts(string content, string path,string filename, VoiceType type = VoiceType.mp3, int per = 1, int speed = 5, int vol = 7)
         {
-            string sf = "wav";
             int p = 1;
             int s = 5;
             int v = 7;
             if (per != 1) p = per;
             if (speed != 5) s = speed;
             if (per != 7) v = vol;
-
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
             // 可选参数
             var option = new Dictionary<string, object>()
     {
@@ -61,11 +63,11 @@ namespace BigBeer.AI.Voice
     };
             var result = tts.Synthesis(content, option);
 
-            if (!string.IsNullOrEmpty(suffix))
-                sf = suffix;
+            string suffix = VoiceSuffix.Getsuffix(type);
+
             if (result.ErrorCode == 0)  // 或 result.Success
             {
-                File.WriteAllBytes(path + $".{sf}", result.Data);
+                File.WriteAllBytes(path + filename + suffix, result.Data);
             }
         }
     }

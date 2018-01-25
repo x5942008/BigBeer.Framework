@@ -36,7 +36,7 @@ namespace BigBeer.Framework.QR_Code
     /// <summary>
     /// 获取后缀
     /// </summary>
-    public class Suffix {
+    public class ImgSuffix {
         public static string Getsuffix(ImgType type)
         {
             var suffix = ".png";

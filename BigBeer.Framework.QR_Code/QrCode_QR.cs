@@ -27,7 +27,8 @@ namespace BigBeer.Framework.QR_Code
             var qrCode = qrEncoder.Encode(url);
             //保存成png文件
             //string filename = @"H:\桌面\截图\url.png";
-            string suffix = Suffix.Getsuffix(type); ;//后缀
+            string suffix = ImgSuffix.Getsuffix(type); ;//后缀
+            if (!Directory.Exists(savapath)) Directory.CreateDirectory(savapath);
             filename = $"{savapath}{filename}{suffix}";
             GraphicsRenderer render = new GraphicsRenderer(new FixedModuleSize(5, QuietZoneModules.Two), Brushes.Black, Brushes.White);
             using (FileStream stream = new FileStream(filename, FileMode.Create))
@@ -44,7 +45,7 @@ namespace BigBeer.Framework.QR_Code
             var qrCode = qrEncoder.Encode(url);
             //保存成png文件
             //string filename = @"H:\桌面\截图\cn.png";
-            string suffix = Suffix.Getsuffix(type); ;//后缀
+            string suffix = ImgSuffix.Getsuffix(type); ;//后缀
             filename = $"{savapath}{filename}{suffix}";
             GraphicsRenderer render = new GraphicsRenderer(new FixedModuleSize(5, QuietZoneModules.Two), Brushes.Black, Brushes.White);
             int w = 500;

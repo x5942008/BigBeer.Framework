@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Voice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VoiceType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="appsetting.json">
