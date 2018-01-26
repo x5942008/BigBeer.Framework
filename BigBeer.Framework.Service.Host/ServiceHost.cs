@@ -139,12 +139,12 @@ namespace BigBeer.Framework.Service.Host
                 ToScreenCenter();
                 Console.Title = "布德软件Windows Service";
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("****************版权说明******************");
-                Console.WriteLine("*       email:develop@buydee.cn          *");
-                Console.WriteLine("*       phone:15980892074                *");
-                Console.WriteLine("*       developer:sunlutao@buydee.cn     *");
-                Console.WriteLine("*       布德软件科技有限公司             *");
-                Console.WriteLine("******************************************");
+                Console.WriteLine("************大雄软件服务框架***********");
+                Console.WriteLine("*       email:549590615@qq.com        *");
+                Console.WriteLine("*       phone:15980892074             *");
+                Console.WriteLine("*       WebSite:www.wujixiong.com     *");
+                Console.WriteLine("*          软件科技有限公司           *");
+                Console.WriteLine("***************************************");
                 Console.WriteLine("提示:所有服务以文件夹的形式存放在根目录 services 中");
                 if (!IsAdministrator())
                 {

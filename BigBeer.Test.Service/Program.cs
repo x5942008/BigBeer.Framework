@@ -13,10 +13,11 @@ namespace BigBeer.Test.Service
         {
             new ServiceHost()
             {
-
+                Name = "TimingTestService",
+                Display = "大雄测试框架"
             }.UseServiceCollection(service =>
             {
-                service.Add<BigBeerTestService>();
+                service.Add<TimingTestService>();
             })
             .Run(args);
         }
