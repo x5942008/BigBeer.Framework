@@ -1,0 +1,351 @@
+#新版本中修正了服务的稳定性,支持一键安装到windows服务.支持随系统启动
+核心代码如下:
+
+
+using System;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Diagnostics;
+using Buday.Windows.Service.Abstract;
+
+namespace Buday.Windows.Service.Host
+{
+    /// <summary>
+    /// windows 服务宿主
+    /// </summary>
+    public sealed class WindowsServiceHost : IServiceHost
+    {
+        ConcurrentBag<ServiceCommand> serviceCommandCollection;
+        IServiceCollection serviceCollection;
+        /// <summary>
+        /// windows 服务名称
+        /// </summary>
+        public string Name { get; set; } = "BudayWindowsService";
+        /// <summary>
+        /// windows 服务显示名称(不能带空格)
+        /// </summary>
+        public string Display { get; set; } = "布德软件windows服务";
+        /// <summary>
+        /// windows 服务详细描述信息
+        /// </summary>
+        public string Description { get; set; } = "布德软件 windows 服务";
+        /// <summary>
+        /// 是否允许桌面交互
+        /// </summary>
+        public bool Desktop { get; set; } = false;
+        /// <summary>
+        /// 日志记录器
+        /// </summary>
+        public Action<string, string> Logger { get; set; }= (n, m) => {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            if (!string.IsNullOrEmpty(n))
+                Console.WriteLine($"{n}");
+            if (!string.IsNullOrEmpty(m))
+                Console.WriteLine($"=> {m}");
+            Console.ForegroundColor = ConsoleColor.Green;
+        };
+    /// <summary>
+    /// 实例化服务宿主
+    /// </summary>
+    public WindowsServiceHost() {
+            serviceCommandCollection = new ConcurrentBag<ServiceCommand>();
+            serviceCollection = DefaultServiceCollection.Default;
+            
+        }
+        #region 设置居中
+        private struct RECT { public int left, top, right, bottom; }
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr GetConsoleWindow();
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool GetWindowRect(IntPtr hWnd, out RECT rc);
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool MoveWindow(IntPtr hWnd, int x, int y, int w, int h, bool repaint);
+        static void ToScreenCenter()
+        {
+            IntPtr hWin = GetConsoleWindow();
+            RECT rc;
+            GetWindowRect(hWin, out rc);
+            Screen scr = Screen.FromPoint(new Point(rc.left, rc.top));
+            int x = scr.WorkingArea.Left + (scr.WorkingArea.Width - (rc.right - rc.left)) / 2;
+            int y = scr.WorkingArea.Top + (scr.WorkingArea.Height - (rc.bottom - rc.top)) / 2;
+            MoveWindow(hWin, x, y, rc.right - rc.left, rc.bottom - rc.top, true);
+        }
+        #endregion
+        /// <summary>
+        /// 设置是否与桌面交互
+        /// </summary>
+        /// <param name="i"></param>
+        void SetDesktopEnable(int i = 1)
+        {
+            if (i >= 10)
+            {
+                Logger($"设置桌面交互失败:{this.Name}", "");
+                return;
+            }
+            try
+            {
+                System.Threading.Thread.Sleep(500);
+                System.Management.ManagementObject myService = new System.Management.ManagementObject(
+                    string.Format("Win32_Service.Name='{0}'", this.Name));
+                System.Management.ManagementBaseObject changeMethod = myService.GetMethodParameters("Change");
+                changeMethod["DesktopInteract"] = true;
+                System.Management.ManagementBaseObject OutParam = myService.InvokeMethod("Change", changeMethod, null);
+            }
+            catch
+            {
+                System.Threading.Thread.Sleep(500);
+                SetDesktopEnable(i += 1);
+            }
+        }
+        /// <summary>
+        /// 判断是否是以管理员角色启动
+        /// </summary>
+        /// <returns></returns>
+         bool IsAdministrator()
+        {
+            WindowsIdentity current = WindowsIdentity.GetCurrent();
+            WindowsPrincipal windowsPrincipal = new WindowsPrincipal(current);
+            //WindowsBuiltInRole可以枚举出很多权限，例如系统用户、User、Guest等等  
+            return windowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        /// <summary>
+        /// 添加命令
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="description"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public IServiceHost AddCommand(string key, string description, Action<IHostEnvironment> command)
+        {
+            return AddCommand(new ServiceCommand() {
+                 Key=key,Description=description,Action= command
+            });
+        }
+        /// <summary>
+        /// 添加命令
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public IServiceHost AddCommand(ServiceCommand command)
+        {
+            if (serviceCommandCollection.Any(t => t.Key == command.Key))
+                throw new Exception("命令重复!");
+            serviceCommandCollection.Add(command);
+            return this;
+        }
+        /// <summary>
+        /// 创建所有服务
+        /// </summary>
+        /// <returns></returns>
+        public IServiceHost Build()
+        {
+            try
+            {
+                ToScreenCenter();
+                Console.Title = Display;
+            }
+            catch (Exception)
+            {
+                return this;
+            }
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("*********************版权说明*********************");
+            Console.WriteLine("*       email    :sunyonghuan@virtuesoft.cn      *");
+            Console.WriteLine("*       url      :www.virtuesoft.cn              *");
+            Console.WriteLine("*       developer:sunyonghuan                    *");
+            Console.WriteLine("*       company  :布德软件科技有限公司           *");
+            Console.WriteLine("**************************************************");
+            if (!IsAdministrator())
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("->");
+                Console.WriteLine("警告:");
+                Console.WriteLine("请使用管理员权限运行此程序,否则无法安装服务成功");
+                Console.WriteLine("->");
+                Console.ForegroundColor = ConsoleColor.Green;
+
+            }
+            Console.WriteLine("输入:help 获取所有命令");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            serviceCommandCollection.Add(new ServiceCommand()
+            {
+                Key = "install",
+                Description = "安装成windows服务,请以管理员身份运行",
+                Action = (env) =>
+                {
+                    try
+                    {
+                        Logger($"开始安装 {Display}", "");
+                        var path = $"{ Process.GetCurrentProcess().MainModule.FileName} service";
+                        Process.Start("sc", $"create {Name} binpath= \"{path}\" displayName= {Display} start= auto");
+                        Process.Start("sc", $"description  {Name} \"{Description}\"");
+                        if (Desktop)
+                            SetDesktopEnable();
+                        Logger("服务安装成功", "");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger($"服务安装失败:{ex.Message}", "");
+                    }
+                }
+            });
+            serviceCommandCollection.Add(new ServiceCommand()
+            {
+                Key = "uninstall",
+                Description = "卸载windows服务",
+                Action = (env) =>
+                {
+                    try
+                    {
+                        Logger($"开始卸载 {Display}", "");
+                        Process.Start("sc", $"delete {Name}");
+                        Logger("服务卸载成功", "");
+                    }
+                    catch
+                    {
+                        Logger("服务卸载失败", "");
+                    }
+                }
+            });
+            serviceCommandCollection.Add(new ServiceCommand()
+            {
+                Key = "start",
+                Description = "不安装服务直接启动所有服务",
+                Action = (env) =>
+                {
+                    Logger("正在准备", "");
+                    var hosevn = new HostEnvironment(serviceCollection, new Dictionary<string, string>()
+                            {
+                                { "path",AppDomain.CurrentDomain.BaseDirectory},
+                                { "name",Name},
+                                { "display",Display},
+                                { "description",Description},
+                                { "type",this.GetType().ToString()},
+                                { "computer",Environment.MachineName},
+                                { "desktop",Desktop.ToString()}
+                            });
+                    foreach (var service in serviceCollection.Where(t=>t.Value.Status!= ServiceStatus.Running))
+                    {
+                        try
+                        {
+                            service.Value.Start(hosevn);
+                            Logger($"  {service.Value.Name}:started", "");
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger($"  {service.Value.Name}:{ex.Message}", "");
+                        }
+                        
+                    }
+                    Logger($"success", "");
+                }
+            });
+            serviceCommandCollection.Add(new ServiceCommand()
+            {
+                Key = "stop",
+                Description = "停止所有服务",
+                Action = (env) =>
+                {
+                    foreach (var service in serviceCollection.Where(t => t.Value.Status == ServiceStatus.Running))
+                    {
+                        try
+                        {
+                            service.Value.Stop();
+                            Logger($"  {service.Value.Name}:stoped", "");
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger($"  {service.Value.Name}:{ex.Message}", "");
+                        }
+
+                    }
+                }
+            });
+            serviceCommandCollection.Add(new ServiceCommand()
+            {
+                Key = "help",
+                Description = "显示所有命令",
+                Action = (env) =>
+                {
+                    foreach (var command in serviceCommandCollection)
+                    {
+                        Logger($"  {command.Key.PadRight(8)} -> {command.Description}", "");
+                    }
+                }
+            });
+            return this;
+        }
+        /// <summary>
+        /// 运行
+        /// </summary>
+        /// <param name="args"></param>
+        public void Run(string[] args)
+        {
+            if (args.Any() && args[0] == "service")
+            {
+                System.ServiceProcess.ServiceBase.Run(new[] { new Buday.Windows.Service.Host.Service() });
+                return;
+            }
+            RunCommand(args);
+        }
+
+        public IServiceHost UseService(Action<IServiceCollection> services)
+        {
+            services(serviceCollection);
+            return this;
+        }
+        void RunCommand(string[] args=null)
+        {
+           var commands = args;
+            
+            if (commands == null)
+            {
+                Console.WriteLine("请输入命令:");
+                Console.ForegroundColor = ConsoleColor.Green;
+                var commandLine = Console.ReadLine().Trim();
+                if (string.IsNullOrEmpty(commandLine))
+                    RunCommand();
+                commands = commandLine.Split(' ').Where(t => !string.IsNullOrEmpty(t)).Select(t => t.Trim()).ToArray();
+            }
+            if (commands == null || !commands.Any()) { RunCommand(); return; }
+                var cmd = commands[0];
+                if (!serviceCommandCollection.Any(t => t.Key != cmd))
+                {
+                    Logger("", "命令不存在");
+                    RunCommand();
+                }
+                try
+                {
+                ServiceCommand command=serviceCommandCollection.Where(t => t.Key == cmd).First();
+                command.Action(new HostEnvironment(serviceCollection, new Dictionary<string, string>()
+                    {
+                         { "path",AppDomain.CurrentDomain.BaseDirectory},
+                                { "name",Name},
+                                { "display",Display},
+                                { "description",Description},
+                                { "type",this.GetType().ToString()},
+                                { "computer",Environment.MachineName},
+                                { "desktop",Desktop.ToString()}
+                    })
+                {
+                    Args = commands.Skip(1).ToArray()
+                });
+                }
+                catch (Exception ex)
+                {
+                    Logger(string.Join(" ", commands), "");
+                    Logger("", ex.Message);
+                    Logger("", ex.Source);
+                }
+            
+            RunCommand(null);
+        }
+    }
+}
