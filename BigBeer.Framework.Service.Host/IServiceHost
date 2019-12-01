@@ -1,0 +1,64 @@
+#服务需要解耦,那要继续再抽象一层方安装成多个服务进行统一管理
+
+   
+   
+   /// <summary>
+    /// 服务宿主
+    /// </summary>
+    public interface IServiceHost
+    {
+        /// <summary>
+        /// 服务名称
+        /// 不能有空格
+        /// </summary>
+        string Name { get; set; }
+        /// <summary>
+        /// windows 服务显示名称(不能带空格)
+        /// </summary>
+        string Display { get; set; }
+        /// <summary>
+        /// windows 服务详细描述信息
+        /// </summary>
+        string Description { get; set; }
+        /// <summary>
+        /// 是否允许桌面交互
+        /// </summary>
+        bool Desktop { get; set; }
+        /// <summary>
+        /// 添加命令
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="description"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        IServiceHost AddCommand(string key,string description, Action<IHostEnvironment> command);
+        /// <summary>
+        /// 添加命令
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        IServiceHost AddCommand(ServiceCommand command);
+        /// <summary>
+        /// 日志记录器
+        /// </summary>
+        Action<string, string> Logger { get; set; }
+        /// <summary>
+        /// 添加服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        IServiceHost UseService(Action<IServiceCollection> services);
+        /// <summary>
+        /// 组建服务
+        /// </summary>
+        /// <returns></returns>
+        IServiceHost Build();
+       
+        /// <summary>
+        /// 开始所有服务
+        /// </summary>
+        void Run(string[] args);
+        
+
+
+    }
